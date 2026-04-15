@@ -4,7 +4,7 @@ import 'course_tile.dart';
 
 class AcademicProgressCard extends StatelessWidget {
   final List<CourseModel> courses;
-  final double progress; // 0.0 - 1.0
+  final double progress;
 
   const AcademicProgressCard({
     super.key,
@@ -19,50 +19,59 @@ class AcademicProgressCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: const Color(0xFFE7E7E7)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Academic Progress',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          const Row(
+            children: [
+              Icon(
+                Icons.menu_book_outlined,
+                color: Color(0xFFE70E2F),
+                size: 26,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Academic Progress',
+                style: TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
-
-          const SizedBox(height: 12),
-
-          const Text(
-            'Semester Progress',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-
           const SizedBox(height: 10),
-
+          const Text(
+            'Current semester courses and grades',
+            style: TextStyle(
+              fontSize: 15,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+          const SizedBox(height: 18),
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 10,
+              backgroundColor: const Color(0xFFD1D5DB),
+              valueColor: const AlwaysStoppedAnimation(Color(0xFF030326)),
             ),
           ),
-
-          const SizedBox(height: 6),
-
-          Text('${(progress * 100).toInt()}% complete'),
-
-          const SizedBox(height: 16),
-          const Divider(),
-
-          const SizedBox(height: 8),
-
+          const SizedBox(height: 10),
+          Text(
+            '${(progress * 100).toInt()}% complete',
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+          const SizedBox(height: 14),
           ...courses.map(
             (course) => Padding(
-              padding: const EdgeInsets.only(bottom: 6),
+              padding: const EdgeInsets.only(top: 12),
               child: CourseTile(course: course),
             ),
           ),
