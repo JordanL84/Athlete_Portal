@@ -15,8 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Simulate loading (later: check auth / load data)
     Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+
       Navigator.pushReplacementNamed(
         context,
         LoginScreen.routeName,

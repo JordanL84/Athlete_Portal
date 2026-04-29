@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/dummy/dummy_careers.dart';
+import '../../state/app_session.dart';
 import '../../widgets/careers/career_match_card.dart';
 import 'career_detail_screen.dart';
 import '../dashboard/dashboard_screen.dart';
@@ -11,7 +12,9 @@ class CareersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final careers = dummyCareers;
+    final careers = AppSession.matchedCareers.isNotEmpty
+        ? AppSession.matchedCareers
+        : dummyCareers;
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +26,6 @@ class CareersScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top nav buttons
             Row(
               children: [
                 Expanded(
@@ -73,9 +75,7 @@ class CareersScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 24),
-
             const Text(
               'Recommended Career Paths',
               style: TextStyle(
@@ -83,16 +83,11 @@ class CareersScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 8),
-
             const Text(
               'Explore careers matched to your interests, strengths, and work preferences.',
             ),
-
             const SizedBox(height: 20),
-
-            // Career cards (refactored)
             ...careers.map(
               (career) => Padding(
                 padding: const EdgeInsets.only(bottom: 16),

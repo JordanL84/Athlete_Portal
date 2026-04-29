@@ -88,10 +88,10 @@ class CareerDevelopmentCard extends StatelessWidget {
               color: const Color(0xFFEA2847),
               borderRadius: BorderRadius.circular(18),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Career Progress',
                   style: TextStyle(
                     color: Colors.white,
@@ -99,8 +99,8 @@ class CareerDevelopmentCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 12),
-                ClipRRect(
+                const SizedBox(height: 12),
+                const ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   child: LinearProgressIndicator(
                     value: 0.375,
@@ -109,10 +109,10 @@ class CareerDevelopmentCard extends StatelessWidget {
                     valueColor: AlwaysStoppedAnimation(Color(0xFF050520)),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  '3 of 8 skills completed in Sports Management',
-                  style: TextStyle(
+                  '3 of 8 skills completed in $title',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                   ),

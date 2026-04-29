@@ -4,6 +4,7 @@ import '../../models/course_model.dart';
 import '../../models/schedule_item_model.dart';
 import '../../data/dummy/dummy_achievements.dart';
 import '../../data/dummy/dummy_user.dart';
+import '../../state/app_session.dart';
 import '../../widgets/dashboard/academic_progress_card.dart';
 import '../../widgets/dashboard/achievement_tile.dart';
 import '../../widgets/dashboard/career_development_card.dart';
@@ -57,6 +58,10 @@ class DashboardScreen extends StatelessWidget {
       CourseModel(id: '4', name: 'ENGL 101', grade: 'B'),
     ];
 
+    final topCareer = AppSession.matchedCareers.isNotEmpty
+        ? AppSession.matchedCareers.first.title
+        : 'Business & Analytics';
+
     final polishedAchievements = [
       ...dummyAchievements,
       const AchievementModel(
@@ -107,7 +112,7 @@ class DashboardScreen extends StatelessWidget {
               ),
               const SizedBox(height: 22),
               CareerDevelopmentCard(
-                title: 'Business & Analytics',
+                title: topCareer,
                 onPressed: () {
                   Navigator.pushNamed(
                     context,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../models/survey_response_model.dart';
+import '../../services/matching_service.dart';
+import '../../state/app_session.dart';
 import '../../widgets/survey/survey_nav_buttons.dart';
 import '../../widgets/survey/survey_progress_header.dart';
 import '../dashboard/dashboard_screen.dart';
@@ -31,6 +34,19 @@ class _SurveyScreenState extends State<SurveyScreen> {
         currentStep++;
       });
     } else {
+      final survey = SurveyResponseModel(
+        experiences: selectedStep1,
+        interests: selectedStep2,
+        skills: selectedStep3,
+        workPreferences: selectedStep4,
+        careerGoal: careerGoal,
+      );
+
+      final matches = MatchingService.getMatches(survey);
+
+      AppSession.updateSurvey(survey);
+      AppSession.updateMatchedCareers(matches);
+
       Navigator.pushReplacementNamed(
         context,
         DashboardScreen.routeName,

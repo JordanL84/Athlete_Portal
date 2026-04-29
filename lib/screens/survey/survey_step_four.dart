@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/survey/checkbox_tile.dart';
 
-class SurveyStepFour extends StatelessWidget {
+class SurveyStepFour extends StatefulWidget {
   final List<String> selected;
   final String careerGoal;
   final Function(List<String>) onChanged;
@@ -14,6 +14,13 @@ class SurveyStepFour extends StatelessWidget {
     required this.onChanged,
     required this.onGoalChanged,
   });
+
+  @override
+  State<SurveyStepFour> createState() => _SurveyStepFourState();
+}
+
+class _SurveyStepFourState extends State<SurveyStepFour> {
+  late TextEditingController controller;
 
   static const List<String> options = [
     'Team-based collaborative environment',
@@ -28,29 +35,38 @@ class SurveyStepFour extends StatelessWidget {
     'Public-facing communication work',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.careerGoal);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   void toggle(String option) {
-    final updated = List<String>.from(selected);
+    final updated = List<String>.from(widget.selected);
+
     if (updated.contains(option)) {
       updated.remove(option);
     } else {
       updated.add(option);
     }
-    onChanged(updated);
+
+    widget.onChanged(updated);
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController(text: careerGoal);
-    controller.selection = TextSelection.fromPosition(
-      TextPosition(offset: controller.text.length),
-    );
-
     return ListView(
       children: [
         ...options.map(
           (option) => CheckboxTile(
             label: option,
-            isSelected: selected.contains(option),
+            isSelected: widget.selected.contains(option),
             onTap: () => toggle(option),
           ),
         ),
@@ -66,7 +82,7 @@ class SurveyStepFour extends StatelessWidget {
         TextField(
           controller: controller,
           maxLines: 5,
-          onChanged: onGoalChanged,
+          onChanged: widget.onGoalChanged,
           decoration: InputDecoration(
             hintText:
                 'Describe your dream job, career goals, or industries you want to explore.',
