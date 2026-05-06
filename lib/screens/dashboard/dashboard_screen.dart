@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../models/achievement_model.dart';
-import '../../models/course_model.dart';
-import '../../models/schedule_item_model.dart';
 import '../../data/dummy/dummy_achievements.dart';
-import '../../data/dummy/dummy_user.dart';
+import '../../data/dummy/dummy_courses.dart';
+import '../../data/dummy/dummy_schedule.dart';
+import '../../data/repositories/user_repository.dart';
 import '../../state/app_session.dart';
 import '../../widgets/dashboard/academic_progress_card.dart';
 import '../../widgets/dashboard/achievement_tile.dart';
@@ -16,65 +15,17 @@ import '../careers/careers_screen.dart';
 class DashboardScreen extends StatelessWidget {
   static const String routeName = '/dashboard';
 
-  const DashboardScreen({super.key});
+  DashboardScreen({super.key});
+
+  final UserRepository userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
-    const polishedSchedule = [
-      ScheduleItemModel(
-        id: '1',
-        title: 'Team Practice',
-        day: 'Monday',
-        time: '6:00 AM - 8:00 AM',
-        type: 'athletic',
-      ),
-      ScheduleItemModel(
-        id: '2',
-        title: 'KNES 285: Intro to Sport Management',
-        day: 'Monday',
-        time: '10:00 AM - 11:15 AM',
-        type: 'academic',
-      ),
-      ScheduleItemModel(
-        id: '3',
-        title: 'BMGT 230: Business Statistics',
-        day: 'Monday',
-        time: '2:00 PM - 3:15 PM',
-        type: 'academic',
-      ),
-      ScheduleItemModel(
-        id: '4',
-        title: 'Mandatory Study Hall',
-        day: 'Monday',
-        time: '7:00 PM - 9:00 PM',
-        type: 'study',
-      ),
-    ];
-
-    const polishedCourses = [
-      CourseModel(id: '1', name: 'KNES 285', grade: 'A-'),
-      CourseModel(id: '2', name: 'BMGT 230', grade: 'B+'),
-      CourseModel(id: '3', name: 'COMM 107', grade: 'A'),
-      CourseModel(id: '4', name: 'ENGL 101', grade: 'B'),
-    ];
+    final user = userRepository.getCurrentUser();
 
     final topCareer = AppSession.matchedCareers.isNotEmpty
         ? AppSession.matchedCareers.first.title
         : 'Business & Analytics';
-
-    final polishedAchievements = [
-      ...dummyAchievements,
-      const AchievementModel(
-        id: '4',
-        title: "Dean's List",
-        description: 'Fall 2025 semester',
-      ),
-      const AchievementModel(
-        id: '5',
-        title: 'Player of the Week',
-        description: 'Week of March 24',
-      ),
-    ];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F7F5),
@@ -84,11 +35,11 @@ class DashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileHeader(name: dummyUser.name),
+              ProfileHeader(name: user.name),
               const SizedBox(height: 20),
-              const Text(
-                'Welcome Back, Jordan!',
-                style: TextStyle(
+              Text(
+                'Welcome Back, ${user.name}!',
+                style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
                   height: 1.15,
@@ -104,10 +55,10 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 22),
-              const ScheduleCard(schedule: polishedSchedule),
+              const ScheduleCard(schedule: dummySchedule),
               const SizedBox(height: 22),
               const AcademicProgressCard(
-                courses: polishedCourses,
+                courses: dummyCourses,
                 progress: 0.72,
               ),
               const SizedBox(height: 22),
@@ -150,7 +101,7 @@ class DashboardScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 18),
-                    ...polishedAchievements.map(
+                    ...dummyAchievements.map(
                       (achievement) => Padding(
                         padding: const EdgeInsets.only(bottom: 14),
                         child: AchievementTile(

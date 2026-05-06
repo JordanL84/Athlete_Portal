@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../data/dummy/dummy_careers.dart';
 import '../../state/app_session.dart';
 import '../../widgets/careers/career_match_card.dart';
-import 'career_detail_screen.dart';
 import '../dashboard/dashboard_screen.dart';
+import 'career_overview_screen.dart';
 
 class CareersScreen extends StatelessWidget {
   static const String routeName = '/careers';
@@ -46,9 +46,7 @@ class CareersScreen extends StatelessWidget {
                       child: const Center(
                         child: Text(
                           'Home',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -78,10 +76,7 @@ class CareersScreen extends StatelessWidget {
             const SizedBox(height: 24),
             const Text(
               'Recommended Career Paths',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(
@@ -96,7 +91,7 @@ class CareersScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      CareerDetailScreen.routeName,
+                      CareerOverviewScreen.routeName,
                       arguments: career,
                     );
                   },
