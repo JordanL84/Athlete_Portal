@@ -26,7 +26,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: const Color(0xFFE7E7E7)),
+        border: Border.all(color: const Color(0xFFFFC400), width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

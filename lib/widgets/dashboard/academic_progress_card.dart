@@ -20,7 +20,7 @@ class AcademicProgressCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: const Color(0xFFE7E7E7)),
+        border: Border.all(color: const Color(0xFFFFC400), width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,20 +35,14 @@ class AcademicProgressCard extends StatelessWidget {
               SizedBox(width: 10),
               Text(
                 'Academic Progress',
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
               ),
             ],
           ),
           const SizedBox(height: 10),
           const Text(
             'Current semester courses and grades',
-            style: TextStyle(
-              fontSize: 15,
-              color: Color(0xFF6B7280),
-            ),
+            style: TextStyle(fontSize: 15, color: Color(0xFF6B7280)),
           ),
           const SizedBox(height: 18),
           ClipRRect(
@@ -63,10 +57,7 @@ class AcademicProgressCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             '${(progress * 100).toInt()}% complete',
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF6B7280),
-            ),
+            style: const TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
           ),
           const SizedBox(height: 14),
           ...courses.map(
