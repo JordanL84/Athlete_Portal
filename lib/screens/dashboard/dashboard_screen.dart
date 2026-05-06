@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../data/dummy/dummy_achievements.dart';
 import '../../data/dummy/dummy_courses.dart';
 import '../../data/dummy/dummy_schedule.dart';
 import '../../data/repositories/user_repository.dart';
 import '../../state/app_session.dart';
 import '../../widgets/dashboard/academic_progress_card.dart';
-import '../../widgets/dashboard/achievement_tile.dart';
 import '../../widgets/dashboard/career_development_card.dart';
 import '../../widgets/dashboard/help_option_tile.dart';
 import '../../widgets/dashboard/profile_header.dart';
@@ -21,11 +19,12 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = userRepository.getCurrentUser();
+    userRepository.getCurrentUser();
 
     final topCareer = AppSession.matchedCareers.isNotEmpty
         ? AppSession.matchedCareers.first.title
         : 'Business & Analytics';
+    final firstName = AppSession.displayName.trim().split(' ').first;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F7F5),
@@ -35,10 +34,14 @@ class DashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileHeader(name: user.name),
+              ProfileHeader(
+                name: AppSession.displayName,
+                sport: AppSession.sport,
+                directoryId: AppSession.directoryId,
+              ),
               const SizedBox(height: 20),
               Text(
-                'Welcome Back, ${user.name}!',
+                'Welcome Back, $firstName!',
                 style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
@@ -57,60 +60,13 @@ class DashboardScreen extends StatelessWidget {
               const SizedBox(height: 22),
               const ScheduleCard(schedule: dummySchedule),
               const SizedBox(height: 22),
-              const AcademicProgressCard(
-                courses: dummyCourses,
-                progress: 0.72,
-              ),
+              const AcademicProgressCard(courses: dummyCourses, progress: 0.72),
               const SizedBox(height: 22),
               CareerDevelopmentCard(
                 title: topCareer,
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    CareersScreen.routeName,
-                  );
+                  Navigator.pushNamed(context, CareersScreen.routeName);
                 },
-              ),
-              const SizedBox(height: 22),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(26),
-                  border: Border.all(color: const Color(0xFFE7E7E7)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(
-                          Icons.workspace_premium_outlined,
-                          color: Color(0xFFF2C200),
-                          size: 26,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Recent Achievements',
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 18),
-                    ...dummyAchievements.map(
-                      (achievement) => Padding(
-                        padding: const EdgeInsets.only(bottom: 14),
-                        child: AchievementTile(
-                          achievement: achievement,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
               const SizedBox(height: 22),
               Container(

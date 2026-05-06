@@ -5,11 +5,7 @@ class CareerMatchCard extends StatelessWidget {
   final CareerModel career;
   final VoidCallback onTap;
 
-  const CareerMatchCard({
-    super.key,
-    required this.career,
-    required this.onTap,
-  });
+  const CareerMatchCard({super.key, required this.career, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +16,15 @@ class CareerMatchCard extends StatelessWidget {
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFFFFC400), width: 1.5),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               career.title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(career.description),
@@ -42,6 +36,8 @@ class CareerMatchCard extends StatelessWidget {
                 Expanded(
                   child: LinearProgressIndicator(
                     value: career.matchPercent / 100,
+                    backgroundColor: const Color(0xFFD7D7DC),
+                    color: Colors.black,
                   ),
                 ),
                 const SizedBox(width: 10),

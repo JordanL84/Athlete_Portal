@@ -77,22 +77,70 @@ final Map<String, List<SkillNodeModel>> dummySkillTrees = {
 
   'sports_management': [
     const SkillNodeModel(
-      id: 'team_dynamics',
-      title: 'Team Dynamics',
+      id: 'leadership_management',
+      title: 'Leadership & Management',
       level: 'Foundation',
+      description: 'Lead teams, make strategic decisions, and manage resources',
       isUnlocked: true,
+      isCompleted: true,
     ),
     const SkillNodeModel(
-      id: 'event_planning',
-      title: 'Event Planning',
+      id: 'budget_financial_planning',
+      title: 'Budget & Financial Planning',
       level: 'Foundation',
+      description:
+          'Create budgets, manage revenue streams, and control operational costs',
       isUnlocked: true,
+      isCompleted: true,
     ),
     const SkillNodeModel(
-      id: 'sports_operations',
-      title: 'Sports Operations',
+      id: 'event_planning_operations',
+      title: 'Event Planning & Operations',
+      level: 'Foundation',
+      description:
+          'Organize tournaments, manage game day operations, and coordinate logistics',
+      isUnlocked: true,
+      isCompleted: true,
+    ),
+    const SkillNodeModel(
+      id: 'contract_negotiation',
+      title: 'Contract Negotiation',
       level: 'Intermediate',
-      prerequisiteIds: ['team_dynamics'],
+      description:
+          'Negotiate sponsorships, vendor contracts, and partnership agreements',
+      prerequisiteIds: ['leadership_management'],
+    ),
+    const SkillNodeModel(
+      id: 'facility_management',
+      title: 'Facility Management',
+      level: 'Intermediate',
+      description:
+          'Oversee venue operations, maintenance, and safety protocols',
+      prerequisiteIds: ['budget_financial_planning'],
+    ),
+    const SkillNodeModel(
+      id: 'marketing_promotions',
+      title: 'Marketing & Promotions',
+      level: 'Intermediate',
+      description:
+          'Promote programs, engage fans, and build community relationships',
+      prerequisiteIds: ['event_planning_operations'],
+    ),
+    const SkillNodeModel(
+      id: 'legal_compliance',
+      title: 'Legal & Compliance',
+      level: 'Intermediate',
+      description:
+          'Understand NCAA regulations, Title IX, and sports law fundamentals',
+      prerequisiteIds: ['contract_negotiation'],
+    ),
+    const SkillNodeModel(
+      id: 'crisis_management',
+      title: 'Crisis Management',
+      level: 'Intermediate',
+      description:
+          'Handle emergencies, media relations, and unexpected challenges',
+      prerequisiteIds: ['facility_management'],
     ),
   ],
 

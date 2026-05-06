@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../data/dummy/dummy_careers.dart';
 import '../../state/app_session.dart';
 import '../../widgets/careers/career_match_card.dart';
-import '../dashboard/dashboard_screen.dart';
+import '../../widgets/careers/career_overview/athlete_header.dart';
 import 'career_overview_screen.dart';
 
 class CareersScreen extends StatelessWidget {
@@ -17,84 +18,65 @@ class CareersScreen extends StatelessWidget {
         : dummyCareers;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Career Paths'),
-        automaticallyImplyLeading: false,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        bottom: false,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        DashboardScreen.routeName,
-                      );
-                    },
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: Colors.black12),
+            const AthleteHeader(),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(18, 22, 18, 28),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Your Career Matches',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
                       ),
-                      child: const Center(
-                        child: Text(
-                          'Home',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      "Based on your survey responses, here are career paths that align with your interests and strengths. Select a field to explore the skills and courses you'll need.",
+                      style: TextStyle(color: Color(0xFF596174), height: 1.45),
+                    ),
+                    const SizedBox(height: 26),
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.emoji_events_outlined,
+                          color: Color(0xFFFFC400),
+                          size: 20,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'Top Recommendations',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    ...careers.map(
+                      (career) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: CareerMatchCard(
+                          career: career,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              CareerOverviewScreen.routeName,
+                              arguments: career,
+                            );
+                          },
                         ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Careers',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Recommended Career Paths',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Explore careers matched to your interests, strengths, and work preferences.',
-            ),
-            const SizedBox(height: 20),
-            ...careers.map(
-              (career) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: CareerMatchCard(
-                  career: career,
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      CareerOverviewScreen.routeName,
-                      arguments: career,
-                    );
-                  },
+                  ],
                 ),
               ),
             ),

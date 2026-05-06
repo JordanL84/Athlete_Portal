@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../screens/auth/login_screen.dart';
+import '../../../screens/dashboard/dashboard_screen.dart';
+import '../../../state/app_session.dart';
 import 'overview_styles.dart';
 
 class AthleteHeader extends StatelessWidget {
@@ -20,21 +23,21 @@ class AthleteHeader extends StatelessWidget {
                 child: Icon(Icons.person_outline, color: OverviewStyles.red),
               ),
               const SizedBox(width: 14),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Judah K',
-                      style: TextStyle(
+                      AppSession.displayName,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     Text(
-                      'Soccer • jkamadin',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      '${AppSession.sport} • ${AppSession.directoryId}',
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ],
                 ),
@@ -49,14 +52,24 @@ class AthleteHeader extends StatelessWidget {
           Row(
             children: [
               TextButton.icon(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pushReplacementNamed(
+                  context,
+                  DashboardScreen.routeName,
+                ),
                 icon: const Icon(Icons.home_outlined),
                 label: const Text('Home'),
                 style: TextButton.styleFrom(foregroundColor: Colors.white),
               ),
               const SizedBox(width: 18),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  AppSession.reset();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    LoginScreen.routeName,
+                    (_) => false,
+                  );
+                },
                 icon: const Icon(Icons.logout),
                 label: const Text('Logout'),
                 style: TextButton.styleFrom(foregroundColor: Colors.white),

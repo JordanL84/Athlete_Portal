@@ -34,6 +34,16 @@ class CareerOverviewScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    TextButton.icon(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back),
+                      label: const Text('Your Career Matches'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
                     CareerIntroSection(career: career),
                     const SizedBox(height: 18),
                     CareerStatsRow(stats: _stats),

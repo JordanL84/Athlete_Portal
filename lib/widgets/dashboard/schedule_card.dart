@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import '../../models/schedule_item_model.dart';
 import 'schedule_item_card.dart';
 
-class ScheduleCard extends StatelessWidget {
+class ScheduleCard extends StatefulWidget {
   final List<ScheduleItemModel> schedule;
 
-  const ScheduleCard({
-    super.key,
-    required this.schedule,
-  });
+  const ScheduleCard({super.key, required this.schedule});
+
+  @override
+  State<ScheduleCard> createState() => _ScheduleCardState();
+}
+
+class _ScheduleCardState extends State<ScheduleCard> {
+  bool showWeek = false;
 
   @override
   Widget build(BuildContext context) {
-    final todayItems = schedule.take(4).toList();
+    final visibleItems = showWeek
+        ? widget.schedule
+        : widget.schedule.take(2).toList();
 
     return Container(
       width: double.infinity,
@@ -35,10 +41,7 @@ class ScheduleCard extends StatelessWidget {
               SizedBox(width: 10),
               Text(
                 'Schedule',
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
               ),
             ],
           ),
@@ -61,47 +64,68 @@ class ScheduleCard extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'Today',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 17,
-                      ),
-                    ),
+                  child: _ScheduleTab(
+                    label: 'Today',
+                    isSelected: !showWeek,
+                    onTap: () => setState(() => showWeek = false),
                   ),
                 ),
-                const Expanded(
-                  child: SizedBox(
-                    height: 44,
-                    child: Center(
-                      child: Text(
-                        'This Week',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
+                Expanded(
+                  child: _ScheduleTab(
+                    label: 'This Week',
+                    isSelected: showWeek,
+                    onTap: () => setState(() => showWeek = true),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 18),
-          ...todayItems.map(
+          ...visibleItems.map(
             (item) => Padding(
               padding: const EdgeInsets.only(bottom: 14),
               child: ScheduleItemCard(item: item),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ScheduleTab extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _ScheduleTab({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        height: 44,
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.white : Colors.transparent,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+            fontSize: 17,
+            color: isSelected
+                ? const Color(0xFF6A6A6A)
+                : const Color(0xFF77777D),
+          ),
+        ),
       ),
     );
   }
